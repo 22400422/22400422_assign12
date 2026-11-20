@@ -19,8 +19,39 @@
 > - Dependency Arry : useEffect의 실행 시점을 제어하는 배열이다. 배열을 생략하거나 []로 지정하는 등 사용 형태에 따라 Effect의 실행 시점이 달라진다.
 > - Cleanup : 컴포넌트가 언마운트 되거나 의존성 변경으로 Effect가 다시 실행되기 전에 기존 작업을 정리한다. 예를 들어 setInterval을 사용하여 실행 중인 타이머를 종료할 수 있다.
 >
-> **useRef** <br>
-> useRef는 .current 속성에 값을 저장할 수 있다. useState와 동일하게 리렌더링 후에도 값이 유지되지만, useRef는 .current의 값이 변경되어도 리렌더링이 발생하지 않는다는 것이 특징이다. 
+> **useRef**
+> - useRef는 .current 속성에 값을 저장할 수 있다. useState와 동일하게 리렌더링 후에도 값이 유지되지만, useRef는 .current의 값이 변경되어도 리렌더링이 발생하지 않는다는 것이 특징이다. 
 >
-> **Code Analysis**
+> **useEffect와 useRef 관련 각 주요 코드 설명**
+> ```jsx
+> const [count, setCount] = useState(0);
+> const [running, setRunning] = useState(false);
+>
+> useEffect(() => {
+>   if (!running) {
+>     return;
+>   }
+>
+>   const id = setInterval(() => {
+>     setCount(prev => prev + 1);
+>   }, 1000);
+>
+>   return () => clearInterval(id);
+> }, [running]);
+> ```
+> 이 코드는 타이머의 시작과 중지를 구현한 코드이다. 우선 running State를 초기값 false로 선언한다. Effect가 실행된 후 running이 false이면 Effect가 종료되고, true이면 `setInterval`이 실행되어 1초마다 count를 1씩 증가시킨다. 생성한 타이머 id는 `id`에 저장된다. running이 변경되어 Effect가 다시 실행되기 전이나 언마운트 될 때 Cleanup이 실행되고, `clearInterval(id)`를 호출하여 기존의 타이머를 종료한다.
+> ```jsx
+> const inputRef = useRef(null);
+>
+> const focusInput = () => {
+>   inputRef.current.focus();
+> };
+>
+> const clearInput = () => {
+>   inputRef.current.value = '';
+>   inputRef.current.focus();
+> };
 > 
+> <input id="student-name" className="field" placeholder="Enter your name" ref={inputRef}/>
+> ```
+> 이 코드는 useRef를 이용하여 입력창 Focus와 Clear를 구현하는 코드이다. 우선 useRef(null)을 이용하여 Ref를 생성하고, ref={inputRef}를 통해 입력창과 연결한다. 이후 사용자가 Focus 버튼을 클릭하면 `focusInput`이 실행되고, inputRef.current.focus()로 입력창으로 커서를 이동시킨다. 사용자가 Clear 버튼을 클릭하면 `clearInput`이 실행되고, 입력창의 내용을 비우고 커서를 이동시킨다.
