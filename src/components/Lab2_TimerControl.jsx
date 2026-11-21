@@ -22,10 +22,13 @@ export default function Lab2TimerControl() {
     setCount(0);
   };
 
+  const min = Math.floor(count / 60);
+  const sec = count % 60;
+
   return (
     <div>
       <p className="status">상태: {running ? 'Running' : 'Stopped'}</p>
-      <div className="count">{count}</div>
+      <div className="count">{min+':'}{sec < 10 ? '0' + sec : sec}</div>
       <div className="controls">
         <button onClick={() => setRunning(true)} disabled={running}>Start</button>
         <button className="secondary" onClick={() => setRunning(false)} disabled={!running}>Stop</button>
