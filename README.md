@@ -55,3 +55,48 @@
 > <input id="student-name" className="field" placeholder="Enter your name" ref={inputRef}/>
 > ```
 > 이 코드는 useRef를 이용하여 입력창 Focus와 Clear를 구현하는 코드이다. 우선 useRef(null)을 이용하여 Ref를 생성하고, ref={inputRef}를 통해 입력창과 연결한다. 이후 사용자가 Focus 버튼을 클릭하면 `focusInput`이 실행되고, inputRef.current.focus()로 입력창으로 커서를 이동시킨다. 사용자가 Clear 버튼을 클릭하면 `clearInput`이 실행되고, 입력창의 내용을 비우고 커서를 이동시킨다.
+>
+**4. Lab Implementation:**
+> **LAB 1. useEffect Timer**
+> - 구현 내용 : useEffect와 setInterval을 이용하여 1초마다 Count가 1씩 증가하는 타이머와 Cleanup을 이용한 타이머 종료 기능을 구현함
+> - 실행 결과 : Count가 1초마다 1씩 증가하고, 다른 LAB으로 이동하면 타이머가 종료됨
+>
+> **LAB 2. Timer Start / Stop**
+> - 구현 내용 : running State와 useEffect를 이용하여 타이머를 시작, 중지, 초기화하는 기능을 구현함
+> - 실행 결과 : Start, Stop, Reset 버튼을 클릭하면 해당 버튼에 해당하는 기능이 실행되고 타이머 중복 실행이 발생하지 않음
+>
+> **LAB 3. Input Focus with useRef**
+> - 구현 내용 : useRef를 이용하여 입력창 Focus와 Clear 기능을 구현함
+> - 실행 결과 : Focus 버튼을 클릭하면 입력창으로 커서가 이동하고, Clear 버튼을 클릭하면 입력창의 내용이 삭제되고 입력창으로 커서가 이동함
+>
+> **LAB 4. Timer with useRef**
+> - 구현 내용 : useRef를 이용하여 타이머 ID를 관리하고 시작, 중지, 초기화 기능과 Cleanup 기능을 구현함
+> - 실행 결과 : Start, Stop, Reset 버튼을 클릭하면 해당 버튼에 해당하는 기능이 실행되고, 다른 LAB으로 이동 시 타이머가 종료됨
+>
+**5. Lab Comparison:**
+> **1. useEffect의 Dependency Array가 필요한 이유는?** <br>
+> Effect가 다시 실행되는 시점을 제어하기 위해서. 즉, 불필요한 Effect의 실행을 방지하기 위해 필요하다.
+>
+> **2. Cleanup을 사용하지 않으면 어떤 문제가 발생할 수 있는가?** <br>
+> Cleanup을 사용하지 않으면 컴포넌트가 언마운트되거나 Effect가 다시 실행되기 전에 기존 작업이 종료되지 않을 수 있다. 그렇게 되면 다른 LAB으로 이동해도 기존 타이머가 종료되지 않고 계속 실행되고, 이 외에도 Effect가 다시 실행될 때 여러 문제가 발생할 수 있다.
+>
+> **3. useState와 useRef의 가장 중요한 차이는?** <br>
+> useState와 useRef의 가장 중요한 차이는 useState는 값이 변경되면 리렌더링이 발생하지만, useRef는 값이 변경되어도 리렌더링이 발생하지 않는다는 것이다.
+>
+> **4. LAB 2와 LAB 4의 Timer 관리 방식은 어떻게 다른가?** <br>
+> LAB 2는 `running State`와 `useEffect`를 이용하여 타이머를 관리한다. running이 true이면 Effect에서 타이머를 생성하고, false이면 Cleanup을 통해 타이머를 종료한다. LAB 4는 `useRef.current`에 타이머 ID를 저장하고, Start와 Stop 함수를 이용하여 타이머를 생성하고 종료한다.
+>
+**6. Customizing:**
+> **프로젝트 제목 또는 설명 변경 (src/App.jsx)**
+> 1. <p>의 내용을 '오픈소스 스튜디오 · 12주차'로 변경 
+> 2. \<h1>의 내용을 '안재용's React 실습 공간'으로 변경
+> 
+> **CSS 스타일 2곳 이상 변경 (src/App.css)**
+> 1. .tab의 background를 white -> rgb(242, 250, 226)로 변경
+> 2. .tab span의 color를 #637086 -> #ef4494로 변경
+>
+> <br>**선택 기능 : Timer Count를 분/초 형식으로 표시 기능
+(src/components/Lab2_TimerControl.jsx, Lab4_RefTimer.jsx)**
+> - 기존의 초 단위로만 표시되던 Timer Count를 분/초 형식으로 표시되도록 코드를 추가, 변경함. 예) 65초 -> 1:05
+>
+<br>**7. Deployment:** 
